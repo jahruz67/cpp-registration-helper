@@ -1,0 +1,53 @@
+name: Deploy install website
+
+on:
+  push:
+    branches: [main, master]
+    paths:
+      - "website/**"
+      - "userscript/cpp-registration-helper.user.js"
+      - "scripts/prepare-pages.py"
+      - ".github/workflows/pages.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pages: write
+      id-token: write
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Check out source
+        uses: actions/checkout@v7
+        with:
+          persist-credentials: false
+
+      - name: Configure GitHub Pages
+        id: pages
+        uses: actions/configure-pages@v5
+
+      - name: Prepare public files
+        env:
+          PAGES_BASE_URL: ${{ steps.pages.outputs.base_url }}
+          REPOSITORY_SLUG: ${{ github.repository }}
+        run: python scripts/prepare-pages.py
+
+      - name: Upload website
+        uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+
+      - name: Publish GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

@@ -1,0 +1,127 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="A friendlier BroncoDirect: course suggestions, professor ratings, familiar subjects, and your week at a glance. Install CPP Registration Helper.">
+  <meta name="theme-color" content="#174b3c">
+  <meta name="cpp-helper-install" content="true">
+  <title>CPP Registration Helper — Your classes, a little clearer</title>
+  <link rel="icon" type="image/svg+xml" href="./assets/mark.svg">
+  <link rel="stylesheet" href="./styles.css">
+  <script src="./site-config.js" defer></script>
+  <script src="./install.js" defer></script>
+</head>
+<body>
+  <a class="skip-link" href="#main">Skip to content</a>
+  <div class="page-shell">
+    <header class="site-header">
+      <a class="brand" href="./" aria-label="CPP Registration Helper home">
+        <img src="./assets/mark.svg" alt="" width="38" height="38">
+        <span>CPP <strong>Registration Helper</strong></span>
+      </a>
+      <nav aria-label="Main navigation">
+        <a href="#features">The little upgrades</a>
+        <a href="#get-started">Get started</a>
+        <a data-repository hidden target="_blank" rel="noopener noreferrer">GitHub <span aria-hidden="true">↗</span></a>
+      </nav>
+    </header>
+
+    <main id="main">
+      <section class="hero" aria-labelledby="hero-title">
+        <div class="hero-copy">
+          <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> A little help for your next semester</p>
+          <h1 id="hero-title">Your classes.<br>A little <em>clearer.</em></h1>
+          <p class="hero-description">Find the course you meant. Get to know your professors. See how your week fits together. A few thoughtful upgrades, right inside BroncoDirect.</p>
+          <a class="install-button" href="./cpp-registration-helper.user.js" data-install>Install the user script <span aria-hidden="true">↗</span></a>
+          <p class="install-caption">Free to use. Bring a userscript manager; we’ll help with that.</p>
+          <p id="install-status" class="install-status" role="status" aria-live="polite">Works with Tampermonkey and Violentmonkey.</p>
+          <div class="hero-tags" aria-label="Highlights"><span>No account</span><span>Course names included</span><span>Stays in your browser</span></div>
+        </div>
+
+        <div class="product-preview" aria-label="Illustration of the helper using sample data">
+          <div class="preview-toolbar"><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div><span>BroncoDirect, with a little help</span><span class="preview-label">PREVIEW</span></div>
+          <div class="preview-tabs" role="tablist" aria-label="Feature preview">
+            <button type="button" id="preview-search-tab" role="tab" aria-selected="true" aria-controls="preview-search" data-preview="search">Find a class</button>
+            <button type="button" id="preview-week-tab" role="tab" aria-selected="false" aria-controls="preview-week" tabindex="-1" data-preview="week">Picture your week</button>
+          </div>
+          <div id="preview-search" class="preview-pane" role="tabpanel" aria-labelledby="preview-search-tab">
+            <div class="mock-label">SUBJECT</div>
+            <div class="mock-field"><strong>Mechanical Engineering (ME)</strong><span aria-hidden="true">⌄</span></div>
+            <div class="mock-label">COURSE NUMBER</div>
+            <div class="mock-field mock-field-active">10<span class="mock-caret" aria-hidden="true"></span></div>
+            <div class="mock-results">
+              <div class="mock-result selected"><span class="course-pill">ME 1001L</span><strong>Engineering Graphics and Visualization Laboratory</strong><span class="result-arrow" aria-hidden="true">↵</span></div>
+              <div class="mock-result"><span class="course-pill">ME 1101</span><strong>Computer-Aided Computations</strong></div>
+              <div class="mock-result"><span class="course-pill">ME 1101L</span><strong>Computer-Aided Computations Laboratory</strong></div>
+              <div class="mock-result-footer">The number and the name. Together at last.</div>
+            </div>
+            <div class="preview-tip"><span aria-hidden="true">✦</span> Start typing. Pick your course. Keep going.</div>
+          </div>
+          <div id="preview-week" class="preview-pane" role="tabpanel" aria-labelledby="preview-week-tab" hidden>
+            <div class="mini-week-header"><strong>Your week at a glance</strong><span>Sample week</span></div>
+            <div class="mini-week-tabs"><span class="active">Shopping Cart</span><span>Enrolled</span></div>
+            <div class="mini-days" aria-hidden="true"><span></span><span>MON</span><span>TUE</span><span>WED</span></div>
+            <div class="mini-calendar" aria-label="Sample classes arranged into colored blocks across Monday, Tuesday, and Wednesday">
+              <div class="mini-times" aria-hidden="true"><span>9 AM</span><span>10 AM</span><span>11 AM</span><span>12 PM</span><span>1 PM</span></div>
+              <div class="mini-day"><div class="mini-event green"><strong>ME 1101</strong><span>9:00–9:50 AM</span></div><div class="mini-event gold"><strong>MAT 1140</strong><span>11:00–11:50 AM</span></div></div>
+              <div class="mini-day"><div class="mini-event purple"><strong>ME 1001L</strong><span>10:00–11:50 AM</span><small>Lab</small></div></div>
+              <div class="mini-day"><div class="mini-event green"><strong>ME 1101</strong><span>9:00–9:50 AM</span></div><div class="mini-event gold"><strong>MAT 1140</strong><span>11:00–11:50 AM</span></div></div>
+            </div>
+            <div class="preview-tip"><span aria-hidden="true">✦</span> A clear picture before you commit. Sample data shown.</div>
+          </div>
+          <div class="floating-note"><span aria-hidden="true">✓</span> Small upgrades. A smoother registration day.</div>
+        </div>
+      </section>
+
+      <div class="value-strip"><p><strong>One script.</strong> A more familiar place to plan.</p><span>4,166 course names <i aria-hidden="true">·</i> 90 subjects <i aria-hidden="true">·</i> No live catalog needed</span></div>
+
+      <section class="features-section" id="features" aria-labelledby="features-title">
+        <div class="section-heading"><p class="eyebrow">THE LITTLE UPGRADES</p><h2 id="features-title">Less hunting.<br>More planning.</h2><p>The same registration site you know, with a little less work between you and your next semester.</p></div>
+        <div class="feature-grid">
+          <article class="feature-card"><span class="feature-icon" aria-hidden="true">01</span><h3>Find the name behind the number.</h3><p>Choose a subject and type a few digits. Suggestions put course names right beside their numbers, ready to click.</p><span class="feature-tag">Course autocomplete</span></article>
+          <article class="feature-card"><span class="feature-icon" aria-hidden="true">02</span><h3>Your usual subjects, up front.</h3><p>The subjects you select most move to the top. Moved selections appear in bold, so it’s easy to spot your familiar choices.</p><span class="feature-tag">A list that remembers</span></article>
+          <article class="feature-card"><span class="feature-icon" aria-hidden="true">03</span><h3>A little context for that name.</h3><p>Open a professor’s Rate My Professors profile from the results, with a small rating when a unique CPP match is found.</p><span class="feature-tag">CPP-specific professor lookup</span></article>
+          <article class="feature-card"><span class="feature-icon" aria-hidden="true">04</span><h3>Make room for the whole week.</h3><p>A calendar at the bottom of Add Classes shows your cart and enrolled classes in separate tabs. Dropped classes stay out of Enrolled.</p><span class="feature-tag">Color-coded weekly calendar</span></article>
+        </div>
+      </section>
+
+      <section class="getting-started" id="get-started" aria-labelledby="start-title">
+        <div class="section-heading"><p class="eyebrow">A SMALL SETUP, THEN YOU’RE OFF</p><h2 id="start-title">Ready for next semester?</h2><p>A userscript manager adds the helper to the pages where you need it.</p></div>
+        <ol class="install-steps">
+          <li><span class="step-number">1</span><div><h3>Get a userscript manager.</h3><p>Already have one? You’re set. Otherwise, choose <a href="https://www.tampermonkey.net/" target="_blank" rel="noopener noreferrer">Tampermonkey ↗</a> or <a href="https://violentmonkey.github.io/get-it/" target="_blank" rel="noopener noreferrer">Violentmonkey ↗</a> and follow its browser setup.</p></div></li>
+          <li><span class="step-number">2</span><div><h3>Install the helper.</h3><p>Click the button, review the script in your manager, and confirm Install. Your browser always leaves that final choice to you.</p></div></li>
+          <li><span class="step-number">3</span><div><h3>Head back to BroncoDirect.</h3><p>Refresh Class Search or Add Classes. The helper appears in the page. If you used the old extension, disable it first.</p></div></li>
+        </ol>
+        <a class="install-button" href="./cpp-registration-helper.user.js" data-install>Install the user script <span aria-hidden="true">↗</span></a>
+        <button type="button" class="text-button" data-manager-help>Need help with your userscript manager?</button>
+      </section>
+
+      <section class="good-to-know" aria-labelledby="details-title">
+        <h2 id="details-title">A few things to know.</h2>
+        <details><summary>Your schedule stays on the page.</summary><p>Cart and enrolled-class details are read in your browser. They aren’t uploaded by the helper. Subject preferences and cached results live in your userscript manager’s storage. Professor-name lookups go to Rate My Professors without browser cookies.</p></details>
+        <details><summary>Course suggestions aren’t a promise of open seats.</summary><p>The included directory is a snapshot of 4,166 course names across 90 subjects, combining archived catalog names with newer listings. Some older courses remain, and ATH, CM, SME, and OAPL have no directory records. BroncoDirect remains the place to check availability and requirements.</p></details>
+        <details><summary>A missing professor rating doesn’t mean a bad rating.</summary><p>Profiles must match the professor’s name and CPP campus uniquely. Missing or ambiguous profiles and unavailable lookups show N/A, with a link to search within CPP.</p></details>
+        <details><summary>The install button opened a page full of code.</summary><p>Your manager may be missing, disabled, or waiting for browser permission. Enable it, follow its userscript setup prompt, and try again. You can also create a new script in the manager and paste in the downloaded file.</p><button type="button" class="text-button" data-manager-help>Choose a userscript manager →</button></details>
+      </section>
+      <section class="feedback-section" aria-labelledby="feedback-title" data-feedback hidden>
+        <div><p class="eyebrow">HELP MAKE IT BETTER</p><h2 id="feedback-title">Have an idea for the helper?</h2><p>Found a bug, have feedback, or want a new feature? Make an issue on GitHub and tell us about it.</p></div>
+        <a class="feedback-link" data-issues target="_blank" rel="noopener noreferrer">Open a GitHub issue <span aria-hidden="true">↗</span></a>
+      </section>
+    </main>
+
+    <footer class="site-footer"><a class="brand" href="./"><img src="./assets/mark.svg" alt="" width="30" height="30"><span>CPP <strong>Registration Helper</strong></span></a><p>An independent companion for BroncoDirect. <span data-version>v0.1.8</span></p><a data-repository hidden target="_blank" rel="noopener noreferrer">View source on GitHub ↗</a></footer>
+  </div>
+
+  <dialog id="manager-dialog" aria-labelledby="manager-dialog-title">
+    <form method="dialog" class="dialog-close"><button type="submit" aria-label="Close install help">×</button></form>
+    <span class="dialog-symbol" aria-hidden="true">↗</span>
+    <p class="eyebrow">LET’S GET YOU SET UP</p>
+    <h2 id="manager-dialog-title">A home for your userscript.</h2>
+    <p>Have Tampermonkey, Violentmonkey, or another compatible manager? Continue below to open its install screen. Otherwise, add one first.</p>
+    <div class="manager-choices"><a href="https://www.tampermonkey.net/" target="_blank" rel="noopener noreferrer"><strong>Tampermonkey <span aria-hidden="true">↗</span></strong><span>Get the manager for your browser</span></a><a href="https://violentmonkey.github.io/get-it/" target="_blank" rel="noopener noreferrer"><strong>Violentmonkey <span aria-hidden="true">↗</span></strong><span>Get the manager for your browser</span></a></div>
+    <a class="install-button" href="./cpp-registration-helper.user.js" id="confirm-manager">I have a manager — install script <span aria-hidden="true">↗</span></a>
+    <p class="dialog-footnote">After installing a manager, return here to continue. Browsers don’t always reveal installed extensions to websites, so this extra step can appear even if you already have one.</p>
+  </dialog>
+</body>
+</html>
