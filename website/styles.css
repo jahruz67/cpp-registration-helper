@@ -18,6 +18,8 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .site-header nav { display: flex; gap: 27px; align-items: center; font-size: 13px; font-weight: 600; }
 .site-header nav a { text-decoration: none; }
 .site-header nav a:hover { text-decoration: underline; }
+.site-header nav .nav-feedback { padding: 9px 13px; border: 1px solid #c3d0ba; border-radius: 7px; background: #edf1e5; color: var(--green); }
+.site-header nav .nav-feedback:hover { border-color: #94b48b; background: #e3ebd8; }
 .hero { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; padding: 85px 0 93px; }
 .eyebrow { display: flex; align-items: center; gap: 9px; margin: 0 0 19px; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; line-height: 1.6; text-transform: uppercase; }
 .status-dot { width: 7px; height: 7px; border-radius: 100%; background: #41846a; box-shadow: 0 0 0 4px #e5ede3; }
@@ -130,3 +132,5 @@ dialog > p.dialog-footnote { margin-bottom: 0; font-size: 10px; }
 @media (max-width: 420px) { .brand { gap: 8px; font-size: 12px; } .brand strong { font-size: 12px; } .site-header nav { gap: 12px; font-size: 11px; } h1 { font-size: 53px; letter-spacing: -2.5px; } .eyebrow { font-size: 9px; letter-spacing: 1px; } .feature-grid { grid-template-columns: 1fr; } .feature-card { padding: 22px; } .preview-toolbar { gap: 8px; font-size: 8px; } .preview-pane { padding: 18px; } .floating-note { font-size: 8px; right: -3px; } .value-strip > span { font-size: 10px; line-height: 1.8; } .value-strip i { margin-inline: 3px; } dialog { padding: 29px 22px; } }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .install-button { transition: none; } }
 @media (max-width: 420px) { .site-header nav [data-repository] { display: none; } }
+@media (max-width: 760px) { .site-header { flex-wrap: wrap; padding-block: 18px; row-gap: 12px; } }
+@media (max-width: 420px) { .site-header nav a[href="#get-started"] { display: none; } }
