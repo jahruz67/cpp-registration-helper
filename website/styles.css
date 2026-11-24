@@ -18,8 +18,9 @@ button:focus-visible, a:focus-visible, summary:focus-visible { outline: 3px soli
 .site-header nav { display: flex; gap: 27px; align-items: center; font-size: 13px; font-weight: 600; }
 .site-header nav a { text-decoration: none; }
 .site-header nav a:hover { text-decoration: underline; }
-.site-header nav .nav-feedback { padding: 9px 13px; border: 1px solid #c3d0ba; border-radius: 7px; background: #edf1e5; color: var(--green); }
-.site-header nav .nav-feedback:hover { border-color: #94b48b; background: #e3ebd8; }
+.site-header nav .nav-feedback { display: inline-flex; align-items: center; gap: 10px; min-height: 44px; padding: 11px 18px; border: 1px solid var(--green); border-radius: 8px; background: var(--green); color: #fff; font-weight: 700; box-shadow: 0 3px 0 #10392d; text-decoration: none; }
+.site-header nav .nav-feedback:hover { border-color: #23614c; background: #23614c; text-decoration: none; }
+.site-header nav .nav-feedback:active { transform: translateY(2px); box-shadow: 0 1px 0 #10392d; }
 .hero { display: grid; grid-template-columns: 1fr 1fr; align-items: center; gap: 64px; padding: 85px 0 93px; }
 .eyebrow { display: flex; align-items: center; gap: 9px; margin: 0 0 19px; font-size: 11px; font-weight: 700; letter-spacing: 1.6px; line-height: 1.6; text-transform: uppercase; }
 .status-dot { width: 7px; height: 7px; border-radius: 100%; background: #41846a; box-shadow: 0 0 0 4px #e5ede3; }
