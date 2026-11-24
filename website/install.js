@@ -88,9 +88,10 @@
     tab.addEventListener("keydown", event => {
       if (!["ArrowLeft", "ArrowRight", "Home", "End"].includes(event.key)) return;
       event.preventDefault();
-      const next = event.key === "Home" ? "search" : event.key === "End" ? "week"
-        : tab.dataset.preview === "search" ? "week" : "search";
-      showPreview(next, true);
+      const index = previews.indexOf(tab);
+      const next = event.key === "Home" ? 0 : event.key === "End" ? previews.length - 1
+        : (index + (event.key === "ArrowRight" ? 1 : -1) + previews.length) % previews.length;
+      showPreview(previews[next].dataset.preview, true);
     });
   });
 })();

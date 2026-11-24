@@ -33,20 +33,32 @@
         <div class="hero-copy">
           <p class="eyebrow"><span class="status-dot" aria-hidden="true"></span> A little help for your next semester</p>
           <h1 id="hero-title">Your classes.<br>A little <em>clearer.</em></h1>
-          <p class="hero-description">Find the course you meant. Get to know your professors. See how your week fits together. A few thoughtful upgrades, right inside BroncoDirect.</p>
+          <p class="hero-description">Find the course you meant. See <strong>Rate My Professors ratings</strong> beside instructor names. Picture your week. A few thoughtful upgrades, right inside BroncoDirect.</p>
           <a class="install-button" href="./cpp-registration-helper.user.js" data-install>Install the user script <span aria-hidden="true">↗</span></a>
           <p class="install-caption">Free to use. Bring a userscript manager; we’ll help with that.</p>
           <p id="install-status" class="install-status" role="status" aria-live="polite">Works with Tampermonkey and Violentmonkey.</p>
-          <div class="hero-tags" aria-label="Highlights"><span>No account</span><span>Course names included</span><span>Stays in your browser</span></div>
+          <div class="hero-tags" aria-label="Highlights"><span class="hero-rating-tag">★ Rate My Professors ratings</span><span>No account</span><span>Course names included</span></div>
         </div>
 
         <div class="product-preview" aria-label="Illustration of the helper using sample data">
           <div class="preview-toolbar"><div class="window-dots" aria-hidden="true"><i></i><i></i><i></i></div><span>BroncoDirect, with a little help</span><span class="preview-label">PREVIEW</span></div>
           <div class="preview-tabs" role="tablist" aria-label="Feature preview">
-            <button type="button" id="preview-search-tab" role="tab" aria-selected="true" aria-controls="preview-search" data-preview="search">Find a class</button>
-            <button type="button" id="preview-week-tab" role="tab" aria-selected="false" aria-controls="preview-week" tabindex="-1" data-preview="week">Picture your week</button>
+            <button type="button" id="preview-professors-tab" role="tab" aria-selected="true" aria-controls="preview-professors" data-preview="professors">Professor ratings</button>
+            <button type="button" id="preview-search-tab" role="tab" aria-selected="false" aria-controls="preview-search" tabindex="-1" data-preview="search">Class search</button>
+            <button type="button" id="preview-week-tab" role="tab" aria-selected="false" aria-controls="preview-week" tabindex="-1" data-preview="week">Your week</button>
           </div>
-          <div id="preview-search" class="preview-pane" role="tabpanel" aria-labelledby="preview-search-tab">
+          <div id="preview-professors" class="preview-pane" role="tabpanel" aria-labelledby="preview-professors-tab">
+            <p class="rating-preview-label">RATE MY PROFESSORS</p>
+            <h2 class="rating-preview-title">A name. A rating.<br>A little more confidence.</h2>
+            <div class="mock-professor-table" aria-label="Illustration with sample instructors and ratings">
+              <div class="mock-professor-head"><span>INSTRUCTOR</span><span>RMP RATING</span></div>
+              <div class="mock-professor-row"><span class="mock-professor-name">Sample instructor <span aria-hidden="true">↗</span></span><span class="mock-rmp-badge"><span aria-hidden="true">★</span><strong>4.3<small>/5</small></strong></span></div>
+              <div class="mock-professor-row"><span class="mock-professor-name">Another instructor <span aria-hidden="true">↗</span></span><span class="mock-rmp-badge"><span aria-hidden="true">★</span><strong>4.7<small>/5</small></strong></span></div>
+            </div>
+            <p class="rating-preview-description">See student ratings in your search results. Click an instructor’s name to open their matched CPP profile.</p>
+            <div class="preview-tip"><span aria-hidden="true">✦</span> Illustration only · sample instructors and scores.</div>
+          </div>
+          <div id="preview-search" class="preview-pane" role="tabpanel" aria-labelledby="preview-search-tab" hidden>
             <div class="mock-label">SUBJECT</div>
             <div class="mock-field"><strong>Mechanical Engineering (ME)</strong><span aria-hidden="true">⌄</span></div>
             <div class="mock-label">COURSE NUMBER</div>
@@ -82,7 +94,7 @@
         <div class="feature-grid">
           <article class="feature-card"><span class="feature-icon" aria-hidden="true">01</span><h3>Find the name behind the number.</h3><p>Choose a subject and type a few digits. Suggestions put course names right beside their numbers, ready to click.</p><span class="feature-tag">Course autocomplete</span></article>
           <article class="feature-card"><span class="feature-icon" aria-hidden="true">02</span><h3>Your usual subjects, up front.</h3><p>The subjects you select most move to the top. Moved selections appear in bold, so it’s easy to spot your familiar choices.</p><span class="feature-tag">A list that remembers</span></article>
-          <article class="feature-card"><span class="feature-icon" aria-hidden="true">03</span><h3>A little context for that name.</h3><p>Open a professor’s Rate My Professors profile from the results, with a small rating when a unique CPP match is found.</p><span class="feature-tag">CPP-specific professor lookup</span></article>
+          <article class="feature-card feature-card-rmp" id="professor-ratings"><span class="feature-icon" aria-hidden="true">03</span><h3>Rate My Professors, right in your results.</h3><div class="feature-rating-example"><span aria-hidden="true">★</span><strong>4.3/5</strong><span>Sample rating</span></div><p>See ratings beside instructor names and click through to their profiles. Lookups are matched to CPP, with N/A shown when a rating can’t be verified.</p><span class="feature-tag">Professor profiles + student ratings</span></article>
           <article class="feature-card"><span class="feature-icon" aria-hidden="true">04</span><h3>Make room for the whole week.</h3><p>A calendar at the bottom of Add Classes shows your cart and enrolled classes in separate tabs. Dropped classes stay out of Enrolled.</p><span class="feature-tag">Color-coded weekly calendar</span></article>
         </div>
       </section>
