@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CPP Registration Helper
 // @namespace    cpp-registration-helper
-// @version      0.1.12
+// @version      0.1.13
 // @description  Course suggestions, frequent subjects, professor ratings, and weekly schedules in CPP BroncoDirect.
 // @homepageURL  https://jahruz67.github.io/cpp-registration-helper/
 // @supportURL   https://github.com/jahruz67/cpp-registration-helper/issues
@@ -891,7 +891,9 @@ const CPPCatalog = (() => {
   }
 
   function enhanceInstructors() {
-    for (const element of document.querySelectorAll('span[id^="MTG_INSTR$"]')) {
+    for (const element of document.querySelectorAll(
+      'span[id^="MTG_INSTR$"], span[id*="SSR_INSTR_LONG"]'
+    )) {
       if (enhancedInstructors.has(element) && element.querySelector(".cpp-professor")) continue;
       const names = Array.from(element.childNodes)
         .map(node => node.nodeName === "BR" ? "\n" : node.textContent).join("")
