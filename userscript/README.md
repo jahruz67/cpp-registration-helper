@@ -15,6 +15,6 @@ The userscript has its own saved subject history, observed course titles, and pr
 
 Only professor-name lookups contact Rate My Professors. Requests omit cookies; the script does not submit registration forms or send shopping cart data elsewhere. The external rating endpoint may still fail or block requests; names retain CPP-filtered search links when a rating cannot be loaded.
 
-The userscript is now the maintained source. The old extension and downloaded reference pages have been moved out of this repository. The Pages workflow publishes a copy with this project's installation and update URLs; it does not publish those reference pages.
+The userscript is now the maintained source. The old extension and downloaded reference pages have been moved out of this repository. The website installs the raw repository file, and the script's update URLs point there too. Script releases need a version bump and a push to `master`, without a Pages deployment. The Pages workflow retains a copy at the old script URL so existing installations can migrate to repository updates.
 
 The userscript has been reviewed statically. It has not been installed, launched, or tested in a browser.

@@ -1,8 +1,13 @@
 // ==UserScript==
 // @name         CPP Registration Helper
 // @namespace    cpp-registration-helper
-// @version      0.1.10
+// @version      0.1.11
 // @description  Course suggestions, frequent subjects, professor ratings, and weekly schedules in CPP BroncoDirect.
+// @homepageURL  https://jahruz67.github.io/cpp-registration-helper/
+// @supportURL   https://github.com/jahruz67/cpp-registration-helper/issues
+// @downloadURL  https://raw.githubusercontent.com/jahruz67/cpp-registration-helper/master/userscript/cpp-registration-helper.user.js
+// @updateURL    https://raw.githubusercontent.com/jahruz67/cpp-registration-helper/master/userscript/cpp-registration-helper.user.js
+// @match        https://jahruz67.github.io/cpp-registration-helper/*
 // @match        https://cmsweb.cms.cpp.edu/*/SA_LEARNER_SERVICES.CLASS_SEARCH.GBL*
 // @match        https://cmsweb.cms.cpp.edu/*/SA_LEARNER_SERVICES.SSR_SSENRL_CART.GBL*
 // @match        file:///*SA_LEARNER_SERVICES.CLASS_SEARCH.html
@@ -22,7 +27,7 @@
 (() => {
   "use strict";
 
-  // The Pages workflow adds a match scoped to this project's published install site.
+  // The install-site match is scoped to this project's published website.
   // Only announce installation there; the registration helpers stay on BroncoDirect.
   if (document.querySelector('meta[name="cpp-helper-install"][content="true"]')) {
     const announce = () => {

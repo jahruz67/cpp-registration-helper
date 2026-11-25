@@ -8,7 +8,7 @@
 <p align="center">Course names as you type, familiar subjects up front, professor ratings beside their names,<br>and a weekly calendar that makes your plans easier to see.</p>
 
 <p align="center">
-  <a href="userscript/cpp-registration-helper.user.js?raw=1"><strong>Install the user script ↗</strong></a>
+  <a href="https://raw.githubusercontent.com/jahruz67/cpp-registration-helper/master/userscript/cpp-registration-helper.user.js"><strong>Install the user script ↗</strong></a>
   &nbsp; · &nbsp; <a href="#get-started">Get started</a>
   &nbsp; · &nbsp; <a href="#what-you-get">What you get</a>
   &nbsp; · &nbsp; <a href="#publish-the-install-website">Publish the website</a>
@@ -86,12 +86,12 @@ This repository includes the landing page and a GitHub Pages workflow. There are
 
 1. Push this repository to GitHub using a **`main` or `master`** branch.
 2. In the repository, open **Settings → Pages** and set **Source → GitHub Actions**.
-3. Open **Actions → Deploy install website → Run workflow**. Future changes to the website or userscript publish automatically when pushed to either supported branch.
+3. Open **Actions → Deploy install website → Run workflow**. Future website changes publish automatically when pushed to either supported branch. Script-only changes do not trigger a Pages deployment.
 4. Open the website URL shown in the deployment. You can also add it to the repository’s **About → Website** field.
 
-The workflow uses GitHub’s Pages URL automatically, so no username, repository-name, or website-URL placeholders need editing. It publishes only the website assets and the userscript. The deployed script gets matching homepage and update URLs, plus a match limited to this project’s install site so installation detection can work. The source script remains installable directly from GitHub.
+The website’s install buttons link directly to the raw userscript in this repository. The workflow supplies the repository and branch in the website configuration. It also keeps a copy at the old Pages script URL with GitHub update addresses, so existing installations can migrate when their manager next checks for updates.
 
-To release a change, edit `userscript/cpp-registration-helper.user.js`, increase its `@version`, and push. The published website takes its version from that metadata. Userscript managers can check the published update URL according to their own update settings.
+To release a script change, edit `userscript/cpp-registration-helper.user.js`, increase its `@version`, and push to `master`. New installations and userscript update checks then use the repository file directly, according to the manager’s update settings; no Pages deployment is needed. Deploy the website once when switching from the old Pages installation links to these repository links.
 
 ### Project layout
 

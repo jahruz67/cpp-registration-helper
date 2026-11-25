@@ -28,8 +28,13 @@
     if (!dialog.open) dialog.showModal();
   }
 
-  if (config.version) {
-    document.querySelectorAll("[data-version]").forEach(node => { node.textContent = `v${config.version}`; });
+  if (config.installUrl) {
+    try {
+      const install = new URL(config.installUrl);
+      if (install.origin === "https://raw.githubusercontent.com" && install.pathname.endsWith(".user.js")) {
+        document.querySelectorAll("[data-install], #confirm-manager").forEach(link => { link.href = install.href; });
+      }
+    } catch { /* The HTML install links remain usable if configuration is invalid. */ }
   }
   if (config.repositoryUrl) {
     try {
@@ -44,7 +49,7 @@
         });
         document.querySelectorAll("[data-feedback]").forEach(section => { section.hidden = false; });
       }
-    } catch { /* An unconfigured site still has a working local install link. */ }
+    } catch { /* An unconfigured site still has working install links. */ }
   }
 
   // Some Tampermonkey installations expose this API to websites; many managers do not.
