@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CPP Registration Helper
 // @namespace    cpp-registration-helper
-// @version      0.1.11
+// @version      0.1.12
 // @description  Course suggestions, frequent subjects, professor ratings, and weekly schedules in CPP BroncoDirect.
 // @homepageURL  https://jahruz67.github.io/cpp-registration-helper/
 // @supportURL   https://github.com/jahruz67/cpp-registration-helper/issues
@@ -1275,11 +1275,14 @@ const CPPCatalog = (() => {
   }
 
   function refresh() {
-    const cart = document.querySelector(".shopping-cart") || document.querySelector('[id^="win0divSSR_REGFORM_VW$"]');
+    const cart = Array.from(document.querySelectorAll('.shopping-cart, [id^="win0divSSR_REGFORM_VW$"]'))
+      .find(node => node.getClientRects().length > 0
+        && !node.closest('[hidden], [aria-hidden="true"]') && getComputedStyle(node).visibility === "visible");
     const enrolled = document.querySelector('[id^="win0divSTDNT_ENRL_SSVW$"]');
-    if (!cart && !enrolled) {
+    if (!cart) {
       section?.remove();
       section = undefined;
+      activeTab = undefined;
       lastSignature = undefined;
       return;
     }
@@ -1302,12 +1305,15 @@ const CPPCatalog = (() => {
   new MutationObserver(mutations => {
     const relevant = mutations.some(mutation => {
       const target = mutation.target.nodeType === Node.ELEMENT_NODE ? mutation.target : mutation.target.parentElement;
-      return !target?.closest("[data-cpp-schedule]");
+      return !target?.closest("[data-cpp-helper], [data-cpp-schedule]");
     });
     if (!relevant) return;
     clearTimeout(refreshTimer);
     refreshTimer = setTimeout(refresh, 100);
-  }).observe(document.body, { subtree: true, childList: true, characterData: true });
+  }).observe(document.body, {
+    subtree: true, childList: true, characterData: true,
+    attributes: true, attributeFilter: ["class", "style", "hidden", "aria-hidden"]
+  });
   refresh();
 })();
 })();
