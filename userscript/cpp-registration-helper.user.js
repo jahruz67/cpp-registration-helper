@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CPP Registration Helper
 // @namespace    cpp-registration-helper
-// @version      0.1.13
+// @version      0.1.14
 // @description  Course suggestions, frequent subjects, professor ratings, and weekly schedules in CPP BroncoDirect.
 // @homepageURL  https://jahruz67.github.io/cpp-registration-helper/
 // @supportURL   https://github.com/jahruz67/cpp-registration-helper/issues
@@ -232,6 +232,9 @@ function normalizeName(name) {
 async function searchProfessor(name) {
   const schoolId = CPPRmp.schoolNodeId;
   const queryName = orderedName(name);
+  const normalizedName = normalizeName(queryName);
+  const initialName = normalizedName.match(/^([a-z]) (.+)$/);
+  const searchName = initialName ? initialName[2] : queryName;
   const matches = new Map();
   const seenCursors = new Set();
   let cursor = null;
@@ -239,7 +242,7 @@ async function searchProfessor(name) {
     const after = cursor === null ? "" : `, after: ${JSON.stringify(cursor)}`;
     const data = await graphql(`{
       newSearch { teachers(query: {
-        text: ${JSON.stringify(queryName)}, schoolID: ${JSON.stringify(schoolId)}
+        text: ${JSON.stringify(searchName)}, schoolID: ${JSON.stringify(schoolId)}
       }, first: 100${after}) {
         edges { node { legacyId firstName lastName avgRating numRatings school { id } } }
         pageInfo { hasNextPage endCursor }
@@ -250,8 +253,12 @@ async function searchProfessor(name) {
       throw new Error("Professor search returned an unexpected response.");
     }
     for (const { node } of results.edges) {
+      if (typeof node?.firstName !== "string" || typeof node.lastName !== "string") continue;
       const fullName = `${node.firstName} ${node.lastName}`;
-      if (node.school?.id === schoolId && normalizeName(fullName) === normalizeName(queryName)
+      const matchesName = normalizeName(fullName) === normalizedName
+        || (initialName && normalizeName(node.firstName).startsWith(initialName[1])
+          && normalizeName(node.lastName) === initialName[2]);
+      if (node.school?.id === schoolId && matchesName
           && Number.isInteger(node.legacyId) && node.legacyId > 0) {
         matches.set(node.legacyId, node);
       }
@@ -276,8 +283,8 @@ async function searchProfessor(name) {
 }
 
 async function getProfessor(name) {
-  // Ignore results cached by the old campus-discovery lookup.
-  const key = `rmp:professor:v2:${CPPRmp.schoolId}:${normalizeName(name)}`;
+  // Refresh cached matches after adding support for abbreviated instructor names.
+  const key = `rmp:professor:v3:${CPPRmp.schoolId}:${normalizeName(name)}`;
   const cached = (await storage.get(key))[key];
   if (cached?.expires > Date.now()) return cached.result;
   const result = await searchProfessor(name);
@@ -897,7 +904,7 @@ const CPPCatalog = (() => {
       if (enhancedInstructors.has(element) && element.querySelector(".cpp-professor")) continue;
       const names = Array.from(element.childNodes)
         .map(node => node.nodeName === "BR" ? "\n" : node.textContent).join("")
-        .split(/[\n;]+/).map(name => name.replace(/\s+/g, " ").trim()).filter(Boolean);
+        .split(/[\n;]+/).map(name => name.replace(/\s+/g, " ").trim()).filter(name => /\p{L}/u.test(name));
       if (!names.length) continue;
       const children = [];
       for (const name of names) {
