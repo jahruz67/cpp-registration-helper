@@ -1,7 +1,7 @@
 // ==UserScript==
 // @name         CPP Registration Helper
 // @namespace    cpp-registration-helper
-// @version      0.1.14
+// @version      0.1.16
 // @description  Course suggestions, frequent subjects, professor ratings, and weekly schedules in CPP BroncoDirect.
 // @homepageURL  https://jahruz67.github.io/cpp-registration-helper/
 // @supportURL   https://github.com/jahruz67/cpp-registration-helper/issues
@@ -52,13 +52,16 @@
     }
     .cpp-professor-rating, .cpp-professor-score {
       --cpp-score-background: #e7ecef; --cpp-score-ink: #52616b;
-      background: var(--cpp-score-background); color: var(--cpp-score-ink);
+      /* Keep BroncoDirect's button/link states from hiding the score text. */
+      background: var(--cpp-score-background) !important;
+      color: var(--cpp-score-ink) !important;
+      -webkit-text-fill-color: var(--cpp-score-ink) !important;
       border-radius: 4px; font-weight: 700; text-align: center;
     }
     .cpp-professor-rating { min-width: 36px; padding: 1px 7px; font-size: 13px; }
-    [data-cpp-score="high"] { --cpp-score-background: #00852f; --cpp-score-ink: #fff; }
-    [data-cpp-score="medium"] { --cpp-score-background: #f6c84f; --cpp-score-ink: #483700; }
-    [data-cpp-score="low"] { --cpp-score-background: #c73442; --cpp-score-ink: #fff; }
+    .cpp-professor-rating[data-cpp-score="high"], .cpp-professor-score[data-cpp-score="high"] { --cpp-score-background: #00852f; --cpp-score-ink: #fff; }
+    .cpp-professor-rating[data-cpp-score="medium"], .cpp-professor-score[data-cpp-score="medium"] { --cpp-score-background: #f6c84f; --cpp-score-ink: #483700; }
+    .cpp-professor-rating[data-cpp-score="low"], .cpp-professor-score[data-cpp-score="low"] { --cpp-score-background: #c73442; --cpp-score-ink: #fff; }
     .cpp-professor-rating:focus-visible, .cpp-professor-popover a:focus-visible,
     .cpp-professor-close:focus-visible { outline: 2px solid #0065ad; outline-offset: 3px; }
     .cpp-professor-popover {
@@ -539,10 +542,24 @@ const CPPCatalog = (() => {
   function position(state) {
     if (state.panel.hidden) return;
     const rect = state.input.getBoundingClientRect();
+    if (rect.bottom <= 0 || rect.top >= innerHeight || rect.right <= 0 || rect.left >= innerWidth) {
+      close(state);
+      return;
+    }
     const width = Math.min(Math.max(rect.width, 390), Math.max(0, innerWidth - 16));
     state.panel.style.width = `${width}px`;
     state.panel.style.left = `${Math.max(8, Math.min(rect.left, innerWidth - width - 8))}px`;
-    state.panel.style.top = `${rect.bottom + 4}px`;
+    const below = Math.max(0, innerHeight - rect.bottom - 12);
+    const above = Math.max(0, rect.top - 12);
+    // Measure the natural menu height before deciding which side has room.
+    state.list.style.maxHeight = "280px";
+    const height = state.panel.offsetHeight;
+    const openAbove = height > below && above > below;
+    const available = openAbove ? above : below;
+    const chrome = height - state.list.offsetHeight;
+    state.list.style.maxHeight = `${Math.max(0, Math.min(280, available - chrome))}px`;
+    state.panel.style.top = `${Math.max(8, openAbove
+      ? rect.top - state.panel.offsetHeight - 4 : rect.bottom + 4)}px`;
   }
 
   async function loadSubject(state) {
@@ -652,7 +669,10 @@ const CPPCatalog = (() => {
 
   function professorLookup(name) {
     if (!professorRequests.has(name)) {
-      professorRequests.set(name, CPPCatalog.request("professor:lookup", { name }));
+      const request = CPPCatalog.request("professor:lookup", { name });
+      professorRequests.set(name, request);
+      // Match the short failure cache in lookupProfessor, allowing later searches to recover.
+      request.catch(() => setTimeout(() => professorRequests.delete(name), 60000));
     }
     return professorRequests.get(name);
   }
@@ -812,7 +832,9 @@ const CPPCatalog = (() => {
       state.detailsRequested = true;
       const url = state.result.url;
       if (!professorDetailRequests.has(url)) {
-        professorDetailRequests.set(url, CPPCatalog.request("professor:details", { url }));
+        const request = CPPCatalog.request("professor:details", { url });
+        professorDetailRequests.set(url, request);
+        request.catch(() => professorDetailRequests.delete(url));
       }
       professorDetailRequests.get(url).then(details => {
         state.details = details;
@@ -832,6 +854,10 @@ const CPPCatalog = (() => {
       professorPinned = false;
     }
     activeProfessor = state;
+    if (state.detailsError) {
+      state.detailsRequested = false;
+      state.detailsError = false;
+    }
     state.rating.setAttribute("aria-expanded", "true");
     professorPopover.panel.hidden = false;
     updateProfessorPopover(state);
